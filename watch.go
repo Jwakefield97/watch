@@ -26,8 +26,8 @@ func WatchFiles(dir string, regexStr string, script string) {
 				files[path] = info.ModTime()
 				if(!isFirst) {
 
-					fmt.Println(path)
-					cmd := exec.Command("bash", script)                                                                                                                                                          
+					//fmt.Println(path)
+					cmd := exec.Command("bash", script, path)                                                                                                                                                          
 					var out bytes.Buffer                                                                                                                                                                                   
 					cmd.Stdout = &out                                                                                                                                                                                    
 					err := cmd.Run()                                                                                                                                                                                     
@@ -49,7 +49,8 @@ func WatchFiles(dir string, regexStr string, script string) {
 }
 
 func main() {
-	fmt.Println("Usage: ./watch <directory> <regex_to_match_files> <script_to_run_if_file_matched>")
+	fmt.Println("Usage: ./watch <directory> <regex> <script>")
+	fmt.Println("Note: The shell script will be provided the file modified as an argument when the script is run.")
 	dir := os.Args[1]
 	regex := os.Args[2]
 	script := os.Args[3]
